@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil - PasarKita</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span style="font-size: 1.8rem;">🛒</span>
+                <span>PasarKita</span>
+            </a>
+            <div class="nav-menu">
+                <a href="/cart">🛒 Keranjang</a>
+                <div id="auth-section">
+                    <a href="/login" class="btn btn-sm btn-outline">Login</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Profil Pengguna</h1>
+
+        <div style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem; margin-top: 2rem;">
+            <!-- Sidebar -->
+            <aside>
+                <div class="card">
+                    <div class="card-body text-center">
+                        <img id="profile-avatar" src="/default-avatar.svg" 
+                             style="width: 100px; height: 100px; border-radius: 50%; margin-bottom: 1rem;">
+                        <div id="profile-username" style="font-weight: bold; font-size: 1.1rem;">Loading...</div>
+                        <hr>
+                        <a href="/" class="btn btn-sm btn-outline" style="width: 100%; margin-bottom: 0.5rem;">
+                            ← Beranda
+                        </a>
+                        <button onclick="logout()" class="btn btn-sm btn-danger" style="width: 100%;">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main>
+                <div id="profile-container">
+                    <div class="flex-center" style="padding: 3rem;">
+                        <div class="loading"></div>
+                    </div>
+                </div>
+
+                <!-- Avatar Upload Section -->
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h3>Ubah Avatar</h3>
+                        <div class="form-group mt-2">
+                            <input type="file" id="avatar_file" accept="image/*">
+                        </div>
+                        <button onclick="uploadAvatar()" class="btn btn-primary">
+                            Upload Avatar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Security Info -->
+                <div class="card mt-3">
+                    <div class="card-body" style="background: var(--light); border-radius: 8px;">
+                        <strong>💡 Tips Keamanan:</strong>
+                        <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                            <li>Selalu gunakan password yang kuat</li>
+                            <li>Jangan bagikan informasi pribadi Anda</li>
+                            <li>Logout setelah selesai berbelanja</li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!currentUser) {
+                window.location.href = '/login';
+                return;
+            }
+            
+            document.getElementById('profile-username').textContent = currentUser.username;
+            loadProfile();
+        });
+    </script>
+</body>
+</html>

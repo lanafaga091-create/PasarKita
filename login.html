@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PasarKita</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span style="font-size: 1.8rem;">🛒</span>
+                <span>PasarKita</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="
+            max-width: 400px;
+            margin: 3rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        ">
+            <h1 style="text-align: center; margin-bottom: 2rem;">Login PasarKita</h1>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    Login
+                </button>
+            </form>
+
+            <p style="text-align: center; margin-top: 1.5rem;">
+                Belum punya akun? 
+                <a href="/register" style="color: var(--primary); font-weight: bold;">Daftar di sini</a>
+            </p>
+
+            <hr style="margin: 1.5rem 0;">
+
+            <div style="background: var(--light); padding: 1rem; border-radius: 8px; font-size: 0.9rem;">
+                <strong>Akun Demo:</strong>
+                <p>Username: andi</p>
+                <p>Password: andi123</p>
+                <p style="margin-top: 1rem;"><strong>Admin:</strong></p>
+                <p>Username: admin</p>
+                <p>Password: admin123</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PasarKita - Marketplace Indonesia</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span style="font-size: 1.8rem;">🛒</span>
+                <span>PasarKita</span>
+            </a>
+            
+            <form id="search-form" class="search-bar">
+                <input type="text" id="search-input" placeholder="Cari produk..." required>
+            </form>
+            
+            <nav class="nav-menu">
+                <div style="position: relative;">
+                    <a href="/cart">
+                        🛒 Keranjang
+                        <span id="cart-badge" style="
+                            position: absolute;
+                            top: -8px;
+                            right: -8px;
+                            background: var(--danger);
+                            color: white;
+                            border-radius: 50%;
+                            width: 20px;
+                            height: 20px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 0.75rem;
+                            font-weight: bold;
+                        ">0</span>
+                    </a>
+                </div>
+                <div id="auth-section">
+                    <a href="/login" class="btn btn-sm btn-outline">Login</a>
+                    <a href="/register" class="btn btn-sm btn-primary">Register</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Banner -->
+        <div class="banner">
+            <div class="banner-title">🎉 Selamat datang di PasarKita</div>
+            <div class="banner-subtitle">Marketplace terpercaya dengan ribuan produk berkualitas</div>
+            <button onclick="filterByCategory('')" class="btn btn-primary">Belanja Sekarang</button>
+        </div>
+
+        <!-- Categories Section -->
+        <div class="section">
+            <div class="section-title">Kategori Populer</div>
+            <div class="categories" id="categories">
+                <a class="category-item" onclick="filterByCategory(''); return false;">
+                    <div class="category-icon">📦</div>
+                    <div class="category-name">Semua</div>
+                </a>
+                <a class="category-item" onclick="filterByCategory('1'); return false;">
+                    <div class="category-icon">📱</div>
+                    <div class="category-name">Elektronik</div>
+                </a>
+                <a class="category-item" onclick="filterByCategory('2'); return false;">
+                    <div class="category-icon">👕</div>
+                    <div class="category-name">Fashion</div>
+                </a>
+                <a class="category-item" onclick="filterByCategory('3'); return false;">
+                    <div class="category-icon">🏠</div>
+                    <div class="category-name">Rumah</div>
+                </a>
+                <a class="category-item" onclick="filterByCategory('4'); return false;">
+                    <div class="category-icon">⚽</div>
+                    <div class="category-name">Olahraga</div>
+                </a>
+                <a class="category-item" onclick="filterByCategory('5'); return false;">
+                    <div class="category-icon">📚</div>
+                    <div class="category-name">Buku</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div class="section">
+            <div class="section-title">Produk Terbaru</div>
+            <div class="grid grid-2" id="products-container">
+                <div class="flex-center" style="grid-column: 1/-1; padding: 3rem;">
+                    <div class="loading"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer style="
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--light);
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: #666;
+        ">
+            <p>&copy; 2024 PasarKita. Semua hak dilindungi.</p>
+            <p>Platform marketplace untuk security training dan penetration testing.</p>
+        </footer>
+    </div>
+
+    <script src="/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            loadCart();
+        });
+    </script>
+</body>
+</html>

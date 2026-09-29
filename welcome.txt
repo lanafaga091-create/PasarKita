@@ -1,0 +1,38 @@
+========================================
+Selamat datang di PasarKita Marketplace
+========================================
+
+Platform e-commerce untuk security training dan penetration testing.
+
+Fitur:
+- Browse dan search produk
+- Tambah ke keranjang
+- Checkout dengan diskon kupon
+- User profile management
+- Admin dashboard
+- Review produk
+
+Akun Demo:
+Username: andi / Password: andi123
+Username: sari / Password: sari123
+Username: admin / Password: admin123
+
+Kerentanan Keamanan (untuk training):
+- SQL Injection pada /api/products?q=
+- XSS pada review produk
+- IDOR pada /api/users/<id> dan /api/orders/<id>
+- Mass Assignment di /api/profile/update
+- Weak rate limiting
+- File upload vulnerabilities
+- Path traversal
+
+Lihat SECURITY.md untuk detail lengkap.
+
+URLs:
+- Homepage: http://127.0.0.1:5000/
+- Login: http://127.0.0.1:5000/login
+- API: http://127.0.0.1:5000/api/*
+- Admin: http://127.0.0.1:5000/admin (login as admin)
+
+Start testing!
+========================================

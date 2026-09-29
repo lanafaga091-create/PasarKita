@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesanan Saya - PasarKita</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span style="font-size: 1.8rem;">🛒</span>
+                <span>PasarKita</span>
+            </a>
+            <div class="nav-menu">
+                <a href="/cart">🛒 Keranjang</a>
+                <div id="auth-section">
+                    <a href="/login" class="btn btn-sm btn-outline">Login</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Pesanan Saya</h1>
+
+        <div class="grid grid-2" id="orders-container" style="margin-top: 2rem;">
+            <div class="flex-center">
+                <div class="loading"></div>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <a href="/" class="btn btn-outline">← Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!currentUser) {
+                window.location.href = '/login';
+                return;
+            }
+            loadOrders();
+        });
+    </script>
+</body>
+</html>

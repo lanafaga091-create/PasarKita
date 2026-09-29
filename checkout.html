@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - PasarKita</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span style="font-size: 1.8rem;">🛒</span>
+                <span>PasarKita</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Checkout</h1>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 2rem;">
+            <!-- Checkout Form -->
+            <div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Alamat Pengiriman</h3>
+                        
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" id="shipping_name" placeholder="Nama Anda">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Alamat</label>
+                            <textarea id="shipping_address" placeholder="Jalan, No. Rumah..."></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Kota</label>
+                                <input type="text" id="shipping_city" placeholder="Jakarta">
+                            </div>
+                            <div class="form-group">
+                                <label>Kode Pos</label>
+                                <input type="text" id="shipping_postal" placeholder="12345">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Telepon</label>
+                            <input type="tel" id="shipping_phone" placeholder="+62812345678">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h3>Metode Pembayaran</h3>
+                        
+                        <div style="margin-top: 1rem;">
+                            <label style="display: flex; align-items: center; margin-bottom: 1rem; cursor: pointer;">
+                                <input type="radio" name="payment" value="dummy_card" checked>
+                                <span style="margin-left: 0.5rem;">💳 Kartu Kredit (Dummy)</span>
+                            </label>
+                            
+                            <label style="display: flex; align-items: center; margin-bottom: 1rem; cursor: pointer;">
+                                <input type="radio" name="payment" value="dummy_transfer">
+                                <span style="margin-left: 0.5rem;">💰 Transfer Bank (Dummy)</span>
+                            </label>
+                            
+                            <label style="display: flex; align-items: center; cursor: pointer;">
+                                <input type="radio" name="payment" value="dummy_ewallet">
+                                <span style="margin-left: 0.5rem;">📱 E-Wallet (Dummy)</span>
+                            </label>
+                        </div>
+
+                        <div style="background: var(--light); padding: 1rem; border-radius: 8px; margin-top: 1rem; font-size: 0.9rem;">
+                            <strong>⚠️ Dummy Payment</strong>
+                            <p>Ini adalah platform training. Pembayaran tidak akan diproses secara real.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div>
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Ringkasan Pesanan</h3>
+                        
+                        <div style="margin-top: 1.5rem; max-height: 300px; overflow-y: auto;">
+                            <div id="checkout-items">
+                                <p class="text-center">Memuat...</p>
+                            </div>
+                        </div>
+
+                        <hr style="margin: 1rem 0;">
+
+                        <div class="flex-between mb-2">
+                            <span>Subtotal</span>
+                            <span id="checkout-subtotal">Rp 0</span>
+                        </div>
+                        <div class="flex-between mb-2">
+                            <span>Diskon</span>
+                            <span id="checkout-discount">Rp 0</span>
+                        </div>
+                        <div class="flex-between mb-2">
+                            <span>Ongkir</span>
+                            <span id="checkout-shipping">Rp 0</span>
+                        </div>
+
+                        <hr>
+                        <div class="flex-between" style="font-size: 1.2rem; font-weight: bold;">
+                            <span>Total</span>
+                            <span id="checkout-total">Rp 0</span>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label>Kode Kupon</label>
+                            <input type="text" id="checkout-coupon" placeholder="WELCOME10">
+                        </div>
+
+                        <button onclick="checkout()" class="btn btn-success" style="width: 100%; margin-top: 1rem;">
+                            ✓ Pesan Sekarang
+                        </button>
+
+                        <a href="/cart" class="btn btn-outline" style="width: 100%; text-align: center; margin-top: 0.5rem;">
+                            Kembali ke Keranjang
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!currentUser) {
+                window.location.href = '/login';
+                return;
+            }
+            
+            // Display cart items for checkout
+            const container = document.getElementById('checkout-items');
+            let total = 0;
+            
+            cartItems.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+                
+                const div = document.createElement('div');
+                div.style.marginBottom = '1rem';
+                div.innerHTML = `
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>${item.name} (x${item.quantity})</span>
+                        <strong>Rp ${formatPrice(subtotal)}</strong>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            
+            // Update totals
+            document.getElementById('checkout-subtotal').textContent = `Rp ${formatPrice(total)}`;
+            document.getElementById('checkout-total').textContent = `Rp ${formatPrice(total)}`;
+        });
+
+        // Override checkout function for this page
+        const originalCheckout = checkout;
+        window.checkout = function() {
+            const name = document.getElementById('shipping_name').value;
+            const address = document.getElementById('shipping_address').value;
+            const city = document.getElementById('shipping_city').value;
+            const coupon = document.getElementById('checkout-coupon').value;
+            
+            if (!name || !address || !city) {
+                showAlert('Silakan lengkapi alamat pengiriman', 'danger');
+                return;
+            }
+            
+            // Call original checkout
+            document.getElementById('coupon_code').value = coupon;
+            originalCheckout();
+        };
+    </script>
+</body>
+</html>

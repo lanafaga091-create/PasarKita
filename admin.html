@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - PasarKita</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span style="font-size: 1.8rem;">🛒</span>
+                <span>PasarKita Admin</span>
+            </a>
+            <div class="nav-menu">
+                <span>Admin Dashboard</span>
+                <button onclick="logout()" class="btn btn-sm btn-danger">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+
+        <!-- Navigation Tabs -->
+        <div style="display: flex; gap: 1rem; margin: 2rem 0; border-bottom: 2px solid var(--border); padding-bottom: 1rem;">
+            <button onclick="switchTab('users')" id="tab-users" class="btn btn-secondary" style="border: none; background: transparent; color: var(--dark);">
+                👥 Pengguna
+            </button>
+            <button onclick="switchTab('products')" id="tab-products" class="btn btn-secondary" style="border: none; background: transparent; color: var(--dark);">
+                📦 Produk
+            </button>
+            <button onclick="switchTab('orders')" id="tab-orders" class="btn btn-secondary" style="border: none; background: transparent; color: var(--dark);">
+                📋 Pesanan
+            </button>
+            <button onclick="switchTab('comments')" id="tab-comments" class="btn btn-secondary" style="border: none; background: transparent; color: var(--dark);">
+                💬 Komentar
+            </button>
+            <button onclick="switchTab('audit')" id="tab-audit" class="btn btn-secondary" style="border: none; background: transparent; color: var(--dark);">
+                🔍 Audit Log
+            </button>
+        </div>
+
+        <!-- Content Sections -->
+
+        <!-- Users Section -->
+        <div id="section-users" class="admin-section">
+            <h2>Manajemen Pengguna</h2>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Terdaftar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table">
+                                <tr><td colspan="5" class="text-center">Memuat...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div id="section-products" class="admin-section hidden">
+            <h2>Manajemen Produk</h2>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nama</th>
+                                    <th>Harga</th>
+                                    <th>Stok</th>
+                                    <th>Kategori</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table">
+                                <tr><td colspan="5" class="text-center">Memuat...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Section -->
+        <div id="section-orders" class="admin-section hidden">
+            <h2>Manajemen Pesanan</h2>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>User ID</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Tanggal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-table">
+                                <tr><td colspan="5" class="text-center">Memuat...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div id="section-comments" class="admin-section hidden">
+            <h2>Komentar Produk</h2>
+            <div class="alert alert-info">
+                Fitur moderasi komentar tidak tersedia di demo ini
+            </div>
+        </div>
+
+        <!-- Audit Log Section -->
+        <div id="section-audit" class="admin-section hidden">
+            <h2>Audit Log</h2>
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>User ID</th>
+                                    <th>Action</th>
+                                    <th>Details</th>
+                                    <th>IP Address</th>
+                                    <th>Waktu</th>
+                                </tr>
+                            </thead>
+                            <tbody id="audit-table">
+                                <tr><td colspan="6" class="text-center">Memuat...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <a href="/" class="btn btn-outline">← Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+    <script>
+        // Admin specific JavaScript
+        let currentAdminTab = 'users';
+
+        function switchTab(tab) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Remove active styling
+            document.querySelectorAll('[id^="tab-"]').forEach(el => {
+                el.style.borderBottom = 'none';
+                el.style.color = 'var(--dark)';
+            });
+            
+            // Show selected section
+            document.getElementById(`section-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}`).style.borderBottom = '3px solid var(--primary)';
+            document.getElementById(`tab-${tab}`).style.color = 'var(--primary)';
+            
+            currentAdminTab = tab;
+            loadAdminData(tab);
+        }
+
+        function loadAdminData(tab) {
+            if (tab === 'users') {
+                fetch('/api/admin/users')
+                .then(r => r.json())
+                .then(users => {
+                    const tbody = document.getElementById('users-table');
+                    tbody.innerHTML = '';
+                    users.forEach(user => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${user.id}</td>
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td><span class="badge badge-primary">${user.role}</span></td>
+                            <td>${new Date(user.created_at).toLocaleDateString('id-ID')}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                });
+            } else if (tab === 'products') {
+                fetch('/api/admin/products')
+                .then(r => r.json())
+                .then(products => {
+                    const tbody = document.getElementById('products-table');
+                    tbody.innerHTML = '';
+                    products.forEach(product => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${product.id}</td>
+                            <td>${product.name}</td>
+                            <td>Rp ${formatPrice(product.price)}</td>
+                            <td>${product.stock}</td>
+                            <td>${product.category_id}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                });
+            } else if (tab === 'orders') {
+                fetch('/api/admin/orders')
+                .then(r => r.json())
+                .then(orders => {
+                    const tbody = document.getElementById('orders-table');
+                    tbody.innerHTML = '';
+                    orders.forEach(order => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${order.id}</td>
+                            <td>${order.user_id}</td>
+                            <td>Rp ${formatPrice(order.total_price)}</td>
+                            <td><span class="badge badge-primary">${order.status}</span></td>
+                            <td>${new Date(order.created_at).toLocaleDateString('id-ID')}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                });
+            } else if (tab === 'audit') {
+                fetch('/api/admin/audit')
+                .then(r => r.json())
+                .then(logs => {
+                    const tbody = document.getElementById('audit-table');
+                    tbody.innerHTML = '';
+                    logs.forEach(log => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${log.id}</td>
+                            <td>${log.user_id || '-'}</td>
+                            <td>${log.action}</td>
+                            <td>${log.details || '-'}</td>
+                            <td>${log.ip_address}</td>
+                            <td>${new Date(log.created_at).toLocaleDateString('id-ID')}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!currentUser || currentUser.role !== 'admin') {
+                window.location.href = '/';
+                return;
+            }
+            
+            switchTab('users');
+        });
+    </script>
+
+    <style>
+        .admin-section {
+            animation: fadeIn 0.3s ease;
+        }
+
+        .admin-section.hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</body>
+</html>
